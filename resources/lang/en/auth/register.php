@@ -40,8 +40,9 @@ return [
 
         'terms_and_policy' => [
             'label' => 'I agree to the :terms_of_service and :privacy_policy',
-            'terms_of_service' => 'Terms of Service',
+            'security_policy' => 'Security Policy',
             'privacy_policy' => 'Privacy Policy',
+            'refund_policy' => 'Refund Policy',
         ],
 
     ],

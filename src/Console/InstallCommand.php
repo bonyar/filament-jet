@@ -88,7 +88,7 @@ class InstallCommand extends Command
      */
     protected function configureSession()
     {
-        if (! class_exists('CreateSessionsTable')) {
+        if (!class_exists('CreateSessionsTable')) {
             try {
                 $this->call('session:table');
             } catch (Exception $e) {
@@ -120,30 +120,30 @@ class InstallCommand extends Command
         (new Filesystem)->ensureDirectoryExists(resource_path('markdown'));
 
         // Terms Of Service / Privacy Policy...
-        copy(__DIR__.'/../../stubs/resources/markdown/terms.md', resource_path('markdown/terms.md'));
-        copy(__DIR__.'/../../stubs/resources/markdown/policy.md', resource_path('markdown/policy.md'));
+        copy(__DIR__ . '/../../stubs/resources/markdown/terms.md', resource_path('markdown/terms.md'));
+        copy(__DIR__ . '/../../stubs/resources/markdown/policy.md', resource_path('markdown/policy.md'));
 
         // Service Providers...
-        copy(__DIR__.'/../../stubs/app/Providers/FilamentJetServiceProvider.php', app_path('Providers/FilamentJetServiceProvider.php'));
+        copy(__DIR__ . '/../../stubs/app/Providers/FilamentJetServiceProvider.php', app_path('Providers/FilamentJetServiceProvider.php'));
         $this->installServiceProviderAfter('RouteServiceProvider', 'FilamentJetServiceProvider');
 
         // Models...
-        copy(__DIR__.'/../../stubs/app/Models/User.php', app_path('Models/User.php'));
+        copy(__DIR__ . '/../../stubs/app/Models/User.php', app_path('Models/User.php'));
 
         // Factories...
-        copy(__DIR__.'/../../database/factories/UserFactory.php', base_path('database/factories/UserFactory.php'));
+        copy(__DIR__ . '/../../database/factories/UserFactory.php', base_path('database/factories/UserFactory.php'));
 
         // Actions...
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/CreateNewUser.php', app_path('Actions/FilamentJet/CreateNewUser.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/ResetUserPassword.php', app_path('Actions/FilamentJet/ResetUserPassword.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/UpdateUserProfileInformation.php', app_path('Actions/FilamentJet/UpdateUserProfileInformation.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/UpdateUserPassword.php', app_path('Actions/FilamentJet/UpdateUserPassword.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/DeleteUser.php', app_path('Actions/FilamentJet/DeleteUser.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/CreateNewUser.php', app_path('Actions/FilamentJet/CreateNewUser.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/ResetUserPassword.php', app_path('Actions/FilamentJet/ResetUserPassword.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/UpdateUserProfileInformation.php', app_path('Actions/FilamentJet/UpdateUserProfileInformation.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/UpdateUserPassword.php', app_path('Actions/FilamentJet/UpdateUserPassword.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/DeleteUser.php', app_path('Actions/FilamentJet/DeleteUser.php'));
 
         // Routes...
         $this->replaceInFile('auth:api', 'auth:sanctum', base_path('routes/api.php'));
 
-        if (! Str::contains(file_get_contents(base_path('routes/web.php')), "'/register'")) {
+        if (!Str::contains(file_get_contents(base_path('routes/web.php')), "'/register'")) {
             (new Filesystem)->append(base_path('routes/web.php'), $this->routeDefinition());
         }
 
@@ -206,31 +206,31 @@ class InstallCommand extends Command
         (new Filesystem)->ensureDirectoryExists(app_path('Policies'));
 
         // Service Providers...
-        copy(__DIR__.'/../../stubs/app/Providers/AuthServiceProvider.php', app_path('Providers/AuthServiceProvider.php'));
-        copy(__DIR__.'/../../stubs/app/Providers/FilamentJetWithTeamsServiceProvider.php', app_path('Providers/FilamentJetServiceProvider.php'));
+        copy(__DIR__ . '/../../stubs/app/Providers/AuthServiceProvider.php', app_path('Providers/AuthServiceProvider.php'));
+        copy(__DIR__ . '/../../stubs/app/Providers/FilamentJetWithTeamsServiceProvider.php', app_path('Providers/FilamentJetServiceProvider.php'));
 
         // Models...
-        copy(__DIR__.'/../../stubs/app/Models/Membership.php', app_path('Models/Membership.php'));
-        copy(__DIR__.'/../../stubs/app/Models/Team.php', app_path('Models/Team.php'));
-        copy(__DIR__.'/../../stubs/app/Models/TeamInvitation.php', app_path('Models/TeamInvitation.php'));
-        copy(__DIR__.'/../../stubs/app/Models/UserWithTeams.php', app_path('Models/User.php'));
+        copy(__DIR__ . '/../../stubs/app/Models/Membership.php', app_path('Models/Membership.php'));
+        copy(__DIR__ . '/../../stubs/app/Models/Team.php', app_path('Models/Team.php'));
+        copy(__DIR__ . '/../../stubs/app/Models/TeamInvitation.php', app_path('Models/TeamInvitation.php'));
+        copy(__DIR__ . '/../../stubs/app/Models/UserWithTeams.php', app_path('Models/User.php'));
 
         // Actions...
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/AddTeamMember.php', app_path('Actions/FilamentJet/AddTeamMember.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/CreateTeam.php', app_path('Actions/FilamentJet/CreateTeam.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/DeleteTeam.php', app_path('Actions/FilamentJet/DeleteTeam.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/DeleteUserWithTeams.php', app_path('Actions/FilamentJet/DeleteUser.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/InviteTeamMember.php', app_path('Actions/FilamentJet/InviteTeamMember.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/RemoveTeamMember.php', app_path('Actions/FilamentJet/RemoveTeamMember.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/UpdateTeamName.php', app_path('Actions/FilamentJet/UpdateTeamName.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/FilamentJet/CreateNewUserWithTeams.php', app_path('Actions/FilamentJet/CreateNewUser.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/AddTeamMember.php', app_path('Actions/FilamentJet/AddTeamMember.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/CreateTeam.php', app_path('Actions/FilamentJet/CreateTeam.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/DeleteTeam.php', app_path('Actions/FilamentJet/DeleteTeam.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/DeleteUserWithTeams.php', app_path('Actions/FilamentJet/DeleteUser.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/InviteTeamMember.php', app_path('Actions/FilamentJet/InviteTeamMember.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/RemoveTeamMember.php', app_path('Actions/FilamentJet/RemoveTeamMember.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/UpdateTeamName.php', app_path('Actions/FilamentJet/UpdateTeamName.php'));
+        copy(__DIR__ . '/../../stubs/app/Actions/FilamentJet/CreateNewUserWithTeams.php', app_path('Actions/FilamentJet/CreateNewUser.php'));
 
         // Policies...
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/app/Policies', app_path('Policies'));
+        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/app/Policies', app_path('Policies'));
 
         // Factories...
-        copy(__DIR__.'/../../database/factories/UserFactory.php', base_path('database/factories/UserFactory.php'));
-        copy(__DIR__.'/../../database/factories/TeamFactory.php', base_path('database/factories/TeamFactory.php'));
+        copy(__DIR__ . '/../../database/factories/UserFactory.php', base_path('database/factories/UserFactory.php'));
+        copy(__DIR__ . '/../../database/factories/TeamFactory.php', base_path('database/factories/TeamFactory.php'));
     }
 
     /**
@@ -243,9 +243,9 @@ class InstallCommand extends Command
         return <<<'EOF'
 Route::domain(config("filament.domain"))
     ->middleware(config("filament.middleware.base"))
-    ->name(config('filament-jet.route_group_prefix'))
+    ->name(config('filament-jet.route__prefix'))
     ->prefix(config("filament.path"))
-    ->group(function () {
+    ->(function () {
         // Personal data export...
         if (\ArtMin96\FilamentJet\Features::canExportPersonalData()) {
             Route::personalDataExports('personal-data-exports');
@@ -263,10 +263,10 @@ EOF;
      */
     protected function installServiceProviderAfter($after, $name)
     {
-        if (! Str::contains($appConfig = file_get_contents(config_path('app.php')), 'App\\Providers\\'.$name.'::class')) {
+        if (!Str::contains($appConfig = file_get_contents(config_path('app.php')), 'App\\Providers\\' . $name . '::class')) {
             file_put_contents(config_path('app.php'), str_replace(
-                'App\\Providers\\'.$after.'::class,',
-                'App\\Providers\\'.$after.'::class,'.PHP_EOL.'        App\\Providers\\'.$name.'::class,',
+                'App\\Providers\\' . $after . '::class,',
+                'App\\Providers\\' . $after . '::class,' . PHP_EOL . '        App\\Providers\\' . $name . '::class,',
                 $appConfig
             ));
         }
@@ -309,12 +309,12 @@ EOF;
             try {
                 $process->setTty(true);
             } catch (RuntimeException $e) {
-                $this->output->writeln('  <bg=yellow;fg=black> WARN </> '.$e->getMessage().PHP_EOL);
+                $this->output->writeln('  <bg=yellow;fg=black> WARN </> ' . $e->getMessage() . PHP_EOL);
             }
         }
 
         $process->run(function ($type, $line) {
-            $this->output->write('    '.$line);
+            $this->output->write('    ' . $line);
         });
     }
 }

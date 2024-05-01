@@ -309,14 +309,14 @@ class FilamentJet
         return Features::getOption(Features::emailVerification(), 'controller');
     }
 
-    /**
-     * Determine terms of service component.
+   /**
+     * Determine security policy component.
      *
      * @return bool
      */
-    public static function termsOfServiceComponent()
+    public static function securityPolicyComponent()
     {
-        return Features::getOption(Features::registration(), 'terms_of_service');
+        return Features::getOption(Features::registration(), 'security_policy');
     }
 
     /**
@@ -327,6 +327,16 @@ class FilamentJet
     public static function privacyPolicyComponent()
     {
         return Features::getOption(Features::registration(), 'privacy_policy');
+    }
+
+        /**
+     * Determine refund policy component.
+     *
+     * @return bool
+     */
+    public static function refundPolicyComponent()
+    {
+        return Features::getOption(Features::registration(), 'refund_policy');
     }
 
     /**

@@ -6,7 +6,7 @@ use ArtMin96\FilamentJet\FilamentJet;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class PrivacyPolicy extends Component
+class SecurityPolicy extends Component
 {
     /**
      * Show the terms of service for the application.
@@ -15,14 +15,14 @@ class PrivacyPolicy extends Component
      */
     public function render()
     {
-        $policyFile = FilamentJet::localizedMarkdownPath('privacy.md');
+        $securityFile = FilamentJet::localizedMarkdownPath('security.md');
 
-        $view = view('filament-jet::livewire.privacy-policy', [
-            'terms' => Str::markdown(file_get_contents($policyFile)),
+        $view = view('filament-jet::livewire.security-policy', [
+            'terms' => Str::markdown(file_get_contents($securityFile)),
         ]);
 
         $view->layout('filament::components.layouts.base', [
-            'title' => __('filament-jet::registration.privacy_policy'),
+            'title' => __('filament-jet::registration.security_policy'),
         ]);
 
         return $view;

@@ -323,7 +323,7 @@ class Features
     /**
      * Enable the terms of service and privacy policy feature.
      *
-     * @return string
+     * @return string 
      */
     public static function termsAndPrivacyPolicy()
     {

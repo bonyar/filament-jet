@@ -41,8 +41,9 @@ Route::domain(config('filament.domain'))
 
         if (Features::enabled(Features::registration())) {
             if (FilamentJet::hasTermsAndPrivacyPolicyFeature()) {
-                Route::get('/terms-of-service', FilamentJet::termsOfServiceComponent())->name('terms');
-                Route::get('/privacy-policy', FilamentJet::privacyPolicyComponent())->name('policy');
+                Route::get('/security-policy', FilamentJet::securityPolicyComponent())->name('security');
+                Route::get('/privacy-policy', FilamentJet::privacyPolicyComponent())->name('privacy');
+                Route::get('/refund-policy', FilamentJet::refundPolicyComponent())->name('refund');
             }
         }
 

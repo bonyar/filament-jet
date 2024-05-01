@@ -36,24 +36,43 @@ class Account extends Page
     use ProcessesExport;
 
     public ?array $updateProfileInformationState = [];
+    public ?string $currentPassword = null;  // Ensure initialization
+    public ?string $password = null;
+    public ?string $passwordConfirmation = null;
+    public ?int $exportBatch = null;
 
-    public ?string $currentPassword;
+    // public ?array $updateProfileInformationState = [];
 
-    public ?string $password;
+    // public ?string $currentPassword;
 
-    public ?string $passwordConfirmation;
+    // public ?string $password;
+
+    // public ?string $passwordConfirmation;
 
     protected static string $view = 'filament-jet::filament.pages.account';
 
     public function mount(): void
     {
         $this->updateProfileInformationForm->fill($this->user->withoutRelations()->toArray());
+        $this->currentPassword = null;  // Explicitly set currentPassword to null initially
 
-        if (Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm') &&
-            is_null($this->user->two_factor_confirmed_at)) {
+        if (
+            Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm') &&
+            is_null($this->user->two_factor_confirmed_at)
+        ) {
             app(DisableTwoFactorAuthentication::class)($this->user);
         }
     }
+
+    // public function mount(): void
+    // {
+    //     $this->updateProfileInformationForm->fill($this->user->withoutRelations()->toArray());
+
+    //     if (Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm') &&
+    //         is_null($this->user->two_factor_confirmed_at)) {
+    //         app(DisableTwoFactorAuthentication::class)($this->user);
+    //     }
+    // }
 
     protected static function shouldRegisterNavigation(): bool
     {
@@ -79,12 +98,12 @@ class Account extends Page
         return array_filter([
             Features::managesProfilePhotos()
                 ? FileUpload::make('profile_photo_path')
-                    ->image()
-                    ->avatar()
-                    ->disk($this->user->profilePhotoDisk())
-                    ->directory($this->user->profilePhotoDirectory())
-                    ->visible(Features::managesProfilePhotos())
-                    ->rules(['nullable', 'mimes:jpg,jpeg,png', 'max:1024'])
+                ->image()
+                ->avatar()
+                ->disk($this->user->profilePhotoDisk())
+                ->directory($this->user->profilePhotoDirectory())
+                ->visible(Features::managesProfilePhotos())
+                ->rules(['nullable', 'mimes:jpg,jpeg,png', 'max:1024'])
                 : null,
             TextInput::make('name')
                 ->label(__('filament-jet::account/update-information.fields.name'))
@@ -93,7 +112,7 @@ class Account extends Page
             TextInput::make(FilamentJet::username())
                 ->label(__('filament-jet::account/update-information.fields.email'))
                 ->hintAction(
-                    ! empty(config('filament-jet.profile.login_field.hint_action')) && Features::enabled(Features::emailVerification())
+                    !empty(config('filament-jet.profile.login_field.hint_action')) && Features::enabled(Features::emailVerification())
                         ? Action::make('newEmailVerifyNote')
                         ->tooltip(config('filament-jet.profile.login_field.hint_action.tooltip'))
                         ->icon(config('filament-jet.profile.login_field.hint_action.icon'))
@@ -110,34 +129,34 @@ class Account extends Page
         ]);
     }
 
-    protected function updatePasswordFormSchema(): array
-    {
-        $requireCurrentPasswordOnUpdate = Features::optionEnabled(Features::updatePasswords(), 'askCurrentPassword');
+    // protected function updatePasswordFormSchema(): array
+    // {
+    //     $requireCurrentPasswordOnUpdate = Features::optionEnabled(Features::updatePasswords(), 'askCurrentPassword');
 
-        return array_filter([
-            $requireCurrentPasswordOnUpdate
-                ? Password::make('currentPassword')
-                    ->label(__('filament-jet::account/update-password.fields.current_password'))
-                    ->autocomplete('currentPassword')
-                    ->revealable()
-                    ->required()
-                    ->rule('current_password')
-                : null,
-            Password::make('password')
-                ->label(__('filament-jet::account/update-password.fields.new_password'))
-                ->autocomplete('new_password')
-                ->copyable()
-                ->revealable()
-                ->generatable()
-                ->required()
-                ->rules(FilamentJet::getPasswordRules())
-                ->same('passwordConfirmation'),
-            Password::make('passwordConfirmation')
-                ->label(__('filament-jet::account/update-password.fields.confirm_password'))
-                ->autocomplete('passwordConfirmation')
-                ->revealable(),
-        ]);
-    }
+    //     return array_filter([
+    //         $requireCurrentPasswordOnUpdate
+    //             ? Password::make('currentPassword')
+    //                 ->label(__('filament-jet::account/update-password.fields.current_password'))
+    //                 ->autocomplete('currentPassword')
+    //                 ->revealable()
+    //                 ->required()
+    //                 ->rule('current_password')
+    //             : null,
+    //         Password::make('password')
+    //             ->label(__('filament-jet::account/update-password.fields.new_password'))
+    //             ->autocomplete('new_password')
+    //             ->copyable()
+    //             ->revealable()
+    //             ->generatable()
+    //             ->required()
+    //             ->rules(FilamentJet::getPasswordRules())
+    //             ->same('passwordConfirmation'),
+    //         Password::make('passwordConfirmation')
+    //             ->label(__('filament-jet::account/update-password.fields.confirm_password'))
+    //             ->autocomplete('passwordConfirmation')
+    //             ->revealable(),
+    //     ]);
+    // }
 
     /**
      * Update the user's profile information.
@@ -161,6 +180,72 @@ class Account extends Page
     /**
      * Update the user's password.
      */
+    // public function updatePassword(UpdatesUserPasswords $updater): void
+    // {
+    //     $state = $this->updatePasswordForm->getState();
+
+    //     $updater->update($this->user, $state);
+
+    //     Notification::make()
+    //         ->title(__('filament-jet::account/update-password.messages.updated'))
+    //         ->success()
+    //         ->send();
+
+    //     session()->forget('password_hash_'.config('filament.auth.guard'));
+
+    //     Filament::auth()->login($this->user);
+
+    //     $this->reset(['current_password', 'password', 'password_confirmation']);
+    // }
+
+    // public function downloadPersonalData(): BinaryFileResponse
+    // {
+    //     $path = glob(Storage::disk(config('personal-data-export.disk'))->path('')."{$this->user->id}_*.zip");
+
+    //     $this->exportProgress = 0;
+    //     $this->exportBatch = null;
+
+    //     return response()->download(end($path))->deleteFileAfterSend();
+    // }
+
+    public function downloadPersonalData(): BinaryFileResponse
+    {
+        $path = glob(Storage::disk(config('personal-data-export.disk'))->path('') . "{$this->user->id}_*.zip");
+
+        $this->exportProgress = 0;
+        $this->exportBatch = null; // Ensure this property is reset or initialized here if needed
+
+        return response()->download(end($path))->deleteFileAfterSend(true);
+    }
+
+    protected function updatePasswordFormSchema(): array
+    {
+        $requireCurrentPasswordOnUpdate = Features::optionEnabled(Features::updatePasswords(), 'askCurrentPassword');
+
+        return array_filter([
+            $requireCurrentPasswordOnUpdate
+                ? Password::make('currentPassword')
+                ->label(__('filament-jet::account/update-password.fields.current_password'))
+                ->autocomplete('current-password')
+                ->revealable()
+                ->required()
+                ->rules(['required', 'current_password'])  // Assuming 'current_password' is a custom validation rule
+                : null,
+            Password::make('password')
+                ->label(__('filament-jet::account/update-password.fields.new_password'))
+                ->autocomplete('new-password')
+                ->revealable()
+                ->generatable()
+                ->required()
+                ->rules(FilamentJet::getPasswordRules())
+                ->same('passwordConfirmation'),
+            Password::make('passwordConfirmation')
+                ->label(__('filament-jet::account/update-password.fields.confirm_password'))
+                ->autocomplete('new-password')
+                ->revealable(),
+        ]);
+    }
+
     public function updatePassword(UpdatesUserPasswords $updater): void
     {
         $state = $this->updatePasswordForm->getState();
@@ -172,20 +257,10 @@ class Account extends Page
             ->success()
             ->send();
 
-        session()->forget('password_hash_'.config('filament.auth.guard'));
+        session()->forget('password_hash_' . config('filament.auth.guard'));
 
         Filament::auth()->login($this->user);
 
-        $this->reset(['current_password', 'password', 'password_confirmation']);
-    }
-
-    public function downloadPersonalData(): BinaryFileResponse
-    {
-        $path = glob(Storage::disk(config('personal-data-export.disk'))->path('')."{$this->user->id}_*.zip");
-
-        $this->exportProgress = 0;
-        $this->exportBatch = null;
-
-        return response()->download(end($path))->deleteFileAfterSend();
+        $this->reset(['currentPassword', 'password', 'passwordConfirmation']);  // Ensure correct reset
     }
 }
